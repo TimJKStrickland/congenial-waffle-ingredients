@@ -1,0 +1,23 @@
+{
+  "name": "Rails + React + ActiveAdmin",
+  "description": "A React+Rails+AA app built for heroku deployment: An example of using Create React App with Rails 5 API and ActiveAdmin on Heroku",
+  "repository": "https://github.com/timjkstrickland/congenial-waffle-ingredients",
+  "keywords": [
+    "rails",
+    "react",
+    "activeadmin"
+  ],
+  "scripts": {
+    "postdeploy": "bundle exec rake db:seed"
+  },
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "buildpacks": [{
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "heroku/ruby"
+    }
+  ]
+}
