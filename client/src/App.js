@@ -1,87 +1,33 @@
-import React, { Component } from 'react';
-import { Container, Header, Segment, Button, Icon, Dimmer, Loader, Divider } from 'semantic-ui-react'
+import React, { Component, Fragment } from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import './App.css';
+// Heroku Rails starter: https://blog.heroku.com/a-rock-solid-modern-web-stack
+import Ingredients from './pages/Ingredients'
+
+import Home from './pages/Home'
+import ComingSoon from './pages/ComingSoon'
+import NotFound from './pages/NotFound'
+
+// RWD
+import Tribute from './pages/rwd/Tribute'
+import Survey from './pages/rwd/Survey'
 
 
-
-class App extends Component {
-  constructor() {
-    super()
-    this.state = {}
-    this.getDrinks = this.getDrinks.bind(this)
-    this.getDrink = this.getDrink.bind(this)
-  }
-  componentDidMount() {
-    this.getDrinks()
-  }
-
-  fetch(endpoint) {
-    return window.fetch(endpoint)
-      .then(response => response.json())
-      .catch(error => console.log(error));
-  }
-
-  getDrinks () {
-    this.fetch(`/api/drinks`)
-    .then(drinks => {
-      if (drinks.length > 0) {
-        this.setState({drinks})
-        this.getDrink(drinks[0].id)
-      } else {
-        this.setState({ drinks: [] })
-      }
-    })
-  }
-
-  getDrink(id) {
-    this.fetch(`/api/drinks/${id}`)
-    .then(drink => this.setState({drink}))
-    .catch(error => console.alert(error))
-  }
-
+export default class App extends Component {
   render() {
-    let {drink, drinks} = this.state
-    return drinks
-      ? <Container text>
-        <Header as='h2' icon textAlign='center' color='teal'>
-          <Icon name='unordered list' circular />
-          <Header.Content>
-            List of Ingredients
-          </Header.Content>
-        </Header>
-        <Divider hidden section />
-        {drinks && drinks.length
-          ? <Button.Group color='teal' fluid widths={drinks.length}>
-            {Object.keys(drinks).map((key) => {
-              return <Button active={drink && drink.id === drinks[key].id} fluid key={key} onClick={() => this.getDrink(drinks[key].id)}>
-                {drinks[key].title}
-              </Button>
-            })}
-          </Button.Group>
-          : <Container textAlign='center'>No drinks found.</Container>
-        }
-        <Divider section />
-        {drink &&
-          <Container>
-            <Header as='h2'>{drink.title}</Header>
-            {drink.description && <p>{drink.description}</p>}
-            {drink.ingredients &&
-              <Segment.Group>
-                {drink.ingredients.map((ingredient, i) => <Segment key={i}>{ingredient.description}</Segment>)}
-              </Segment.Group>
-            }
-            {drink.steps && <p>{drink.steps}</p>}
-            {drink.source && <Button basic size='tiny' color='teal' href={drink.source}>Source</Button>}
-          </Container>
-        }
-      </Container>
-        : <Container text>
-          <Dimmer active inverted>
-            <Loader content='Loading' />
-          </Dimmer>
-        </Container>
+    return (
+      <Fragment>
+        <Router>
+          <Switch>
+            <Route path='/' exact component={Home} />
+            <Route path='/rwd/tribute' component={Tribute} />
+            <Route path='/rwd/survey' component={Survey} />
+            <Route path='/rwd/:id' component={ComingSoon} />
+            <Route path='/ingredients' exact component={Ingredients} />
+            <Route component={NotFound} />
+          </Switch>
+        </Router>
+      </Fragment>
+    )
   }
 }
-
-export default App;
