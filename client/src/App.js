@@ -9,8 +9,8 @@ import ComingSoon from './pages/ComingSoon'
 import NotFound from './pages/NotFound'
 
 // RWD
-import Tribute from './pages/rwd/Tribute'
-import Survey from './pages/rwd/Survey'
+import Tribute from './components/rwd/Tribute'
+import Survey from './components/rwd/Survey'
 
 
 export default class App extends Component {

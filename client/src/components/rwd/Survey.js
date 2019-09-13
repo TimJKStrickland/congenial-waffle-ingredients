@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, FormButton, FormCheckbox, Input, Dropdown, Radio, Button, TextArea, Checkbox, Label, Select } from 'semantic-ui-react'
+import { Form, FormButton, Input, TextArea, Checkbox } from 'semantic-ui-react'
 
 export default class Survey extends Component {
 
