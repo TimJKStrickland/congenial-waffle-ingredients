@@ -9,6 +9,7 @@ import {
 import ComingSoon from './ComingSoon'
 import Tribute from '../components/rwd/Tribute'
 import Survey from '../components/rwd/Survey'
+import Products from '../components/rwd/Products'
 
 
 function RoutesWithSubRoutes(route) {
@@ -32,7 +33,7 @@ export default class RWD extends Component {
       },
       {
         path: '/rwd/product-landing-page',
-        component: ComingSoon
+        component: Products
       },
       {
         path: '/rwd/technical-documentation',

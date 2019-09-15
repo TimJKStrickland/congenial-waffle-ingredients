@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Container, Button } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import { Container } from 'semantic-ui-react'
 
 export default class Home extends Component {
   render() {
