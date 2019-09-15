@@ -6,6 +6,7 @@ import {
   Header
   } from 'semantic-ui-react'
 
+import ComingSoon from './ComingSoon'
 import Tribute from '../components/rwd/Tribute'
 import Survey from '../components/rwd/Survey'
 
@@ -29,6 +30,18 @@ export default class RWD extends Component {
         path: '/rwd/survey',
         component: Survey
       },
+      {
+        path: '/rwd/product-landing-page',
+        component: ComingSoon
+      },
+      {
+        path: '/rwd/technical-documentation',
+        component: ComingSoon
+      },
+      {
+        path: '/rwd/portfolio',
+        component: ComingSoon
+      },
     ]
     return (
       <Fragment>
@@ -37,8 +50,9 @@ export default class RWD extends Component {
 
           <Button as={Link} to='/rwd/tribute'>Tribute Project</Button>
           <Button as={Link} to='/rwd/survey'>Survey Project</Button>
-          <Button as={Link} to='/rwd/products'>Product Landing Page Project</Button>
-          <Button as={Link} to='/rwd/products'>Product Landing Page Project</Button>
+          <Button as={Link} to='/rwd/product-landing-page'>Product Landing Page Project</Button>
+          <Button as={Link} to='/rwd/technical-documentation'>Technical Documentation</Button>
+          <Button as={Link} to='/rwd/portfolio'>Portfolio</Button>
           {routes.map((route, i) => (
             <RoutesWithSubRoutes key={i} {...route} />
           ))}

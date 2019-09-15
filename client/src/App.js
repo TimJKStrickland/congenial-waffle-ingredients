@@ -24,6 +24,10 @@ export default class App extends Component {
             <Route exact path='/rwd' component={RWD} />
             <Route path='/rwd/:id' render={ props => <RWD {...props} />} />
             <Route exact path='/algos' component={ComingSoon} />
+            <Route exact path='/front-end-libraries' component={ComingSoon} />
+            <Route exact path='/data-visualization' component={ComingSoon} />
+            <Route exact path='/api-and-microservices' component={ComingSoon} />
+            <Route exact path='/information-security-and-quality-assurance' component={ComingSoon} />
             <Route exact path='/ingredients' component={Ingredients} />
             <Route exact path="/404" component={NotFound} />
             <Redirect to="/404" />
