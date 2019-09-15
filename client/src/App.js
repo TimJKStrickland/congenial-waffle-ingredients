@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+
+import Header from './components/Header'
 
 // Heroku Rails starter: https://blog.heroku.com/a-rock-solid-modern-web-stack
 import Ingredients from './pages/Ingredients'
@@ -9,22 +11,22 @@ import ComingSoon from './pages/ComingSoon'
 import NotFound from './pages/NotFound'
 
 // RWD
-import Tribute from './components/rwd/Tribute'
-import Survey from './components/rwd/Survey'
-
+import RWD from './pages/RWD'
 
 export default class App extends Component {
   render() {
     return (
       <Fragment>
         <Router>
+          <Header />
           <Switch>
-            <Route path='/' exact component={Home} />
-            <Route path='/rwd/tribute' component={Tribute} />
-            <Route path='/rwd/survey' component={Survey} />
-            <Route path='/rwd/:id' component={ComingSoon} />
-            <Route path='/ingredients' exact component={Ingredients} />
-            <Route component={NotFound} />
+            <Route exact path='/' component={Home} />
+            <Route exact path='/rwd' component={RWD} />
+            <Route path='/rwd/:id' render={ props => <RWD {...props} />} />
+            <Route exact path='/algos' component={ComingSoon} />
+            <Route exact path='/ingredients' component={Ingredients} />
+            <Route exact path="/404" component={NotFound} />
+            <Redirect to="/404" />
           </Switch>
         </Router>
       </Fragment>

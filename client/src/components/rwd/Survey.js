@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import { Form, FormButton, Input, TextArea, Checkbox } from 'semantic-ui-react'
 
+
 export default class Survey extends Component {
-
-  state = {}
-  handleChange = (e, { value }) => this.setState({ value })
-
-  render() {
+  render(){
     return (
       <Form id="survey-form">
         <h1 id="title">This is my form</h1>
@@ -28,8 +25,6 @@ export default class Survey extends Component {
           label='Choose this'
           name='radioGroup'
           value='this'
-          checked={this.state.value === 'this'}
-          onChange={this.handleChange}
         />
         <Form.Field
           control='input'
@@ -37,8 +32,6 @@ export default class Survey extends Component {
           name='radioGroup'
           type='radio'
           value='that'
-          checked={this.state.value === 'that'}
-          onChange={this.handleChange}
         />
         <Form.Group grouped>
           <label>HTML checkboxes</label>
