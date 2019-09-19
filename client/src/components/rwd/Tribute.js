@@ -19,7 +19,6 @@ export default class Tribute extends Component {
           <Link to='https://en.wikipedia.org/wiki/Gabriel_Faur%C3%A9' target='_blank' id='tribute-link'>Check out more</Link>
         </section>
       </main>
-      <Link to='/'>Head Back</Link>
     </Fragment>
     )
   }

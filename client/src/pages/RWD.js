@@ -11,6 +11,7 @@ import Tribute from '../components/rwd/Tribute'
 import Survey from '../components/rwd/Survey'
 import Products from '../components/rwd/Products'
 import Documentation from '../components/rwd/Documentation'
+import Portfolio from '../components/rwd/Portfolio'
 
 
 function RoutesWithSubRoutes(route) {
@@ -42,14 +43,12 @@ export default class RWD extends Component {
       },
       {
         path: '/rwd/portfolio',
-        component: ComingSoon
+        component: Portfolio
       },
     ]
     return (
       <Fragment>
         <Container>
-          <Header>RWD</Header>
-
           <Button as={Link} to='/rwd/tribute'>Tribute Project</Button>
           <Button as={Link} to='/rwd/survey'>Survey Project</Button>
           <Button as={Link} to='/rwd/product-landing-page'>Product Landing Page Project</Button>

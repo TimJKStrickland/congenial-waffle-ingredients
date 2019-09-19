@@ -12,6 +12,7 @@ import NotFound from './pages/NotFound'
 
 // RWD
 import RWD from './pages/RWD'
+import Libraries from './pages/Libraries'
 
 export default class App extends Component {
   render() {
@@ -24,7 +25,8 @@ export default class App extends Component {
             <Route exact path='/rwd' component={RWD} />
             <Route path='/rwd/:id' render={ props => <RWD {...props} />} />
             <Route exact path='/algos' component={ComingSoon} />
-            <Route exact path='/front-end-libraries' component={ComingSoon} />
+            <Route exact path='/front-end-libraries' component={Libraries} />
+            <Route path='/front-end-libraries/:id' render={ props => <Libraries {...props} />} />
             <Route exact path='/data-visualization' component={ComingSoon} />
             <Route exact path='/api-and-microservices' component={ComingSoon} />
             <Route exact path='/information-security-and-quality-assurance' component={ComingSoon} />
