@@ -21,18 +21,21 @@ export default class Libraries extends Component {
   render() {
     const routes = [
       {
-        path: '/front-end-libraries/quote',
+        path: '/front-end-libraries/random-quote-machine',
         component: Quote
       },
       {
-        path: '/front-end-libraries/weather',
-        component: Quote
+        path: '/front-end-libraries/markdown-previewer',
+        component: ComingSoon
       },
     ]
     return (
       <Fragment>
-        <Container>
+        <Header>
           <Button as={Link} to='/front-end-libraries/random-quote-machine'>Quote Project</Button>
+          <Button as={Link} to='/front-end-libraries/markdown-previewer'>Markdown Project</Button>
+        </Header>
+        <Container>
           {routes.map((route, i) => (
             <RoutesWithSubRoutes key={i} {...route} />
           ))}
