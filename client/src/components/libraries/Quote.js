@@ -78,7 +78,7 @@ export default class Quote extends Component {
                 { currentQuote }
               </p>
               <p id="author">
-                &mdash; { currentAuthor }
+                { currentAuthor }
               </p>
             </Container>
             

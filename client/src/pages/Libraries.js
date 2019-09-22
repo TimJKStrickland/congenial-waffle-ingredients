@@ -8,6 +8,7 @@ import {
 
 import ComingSoon from './ComingSoon'
 import Quote from '../components/libraries/Quote'
+import Markdown from '../components/libraries/Markdown'
 
 function RoutesWithSubRoutes(route) {
   return (
@@ -26,7 +27,7 @@ export default class Libraries extends Component {
       },
       {
         path: '/front-end-libraries/markdown-previewer',
-        component: ComingSoon
+        component: Markdown
       },
     ]
     return (
