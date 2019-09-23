@@ -9,5 +9,9 @@
     "build": "yarn --cwd client install && yarn --cwd client build",
     "deploy": "cp -a client/build/. public/",
     "heroku-postbuild": "yarn build && yarn deploy"
+  },
+  "dependencies": {
+    "react-remarkable": "^1.1.3",
+    "remarkable-react": "^1.4.1"
   }
 }
