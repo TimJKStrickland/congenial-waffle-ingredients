@@ -14,6 +14,8 @@ import NotFound from './pages/NotFound'
 import RWD from './pages/RWD'
 import Libraries from './pages/Libraries'
 import DataViz from './pages/DataViz'
+import Microservices from './pages/Microservices'
+import InfoSec from './pages/InfoSec'
 
 export default class App extends Component {
   render() {
@@ -29,9 +31,11 @@ export default class App extends Component {
             <Route exact path='/front-end-libraries' component={Libraries} />
             <Route path='/front-end-libraries/:id' render={ props => <Libraries {...props} />} />
             <Route exact path='/data-visualization' component={DataViz} />
-            <Route exact path='/data-visualization/:id' component={ComingSoon} />
-            <Route exact path='/api-and-microservices' component={ComingSoon} />
-            <Route exact path='/information-security-and-quality-assurance' component={ComingSoon} />
+            <Route path='/data-visualization/:id' render={props => <DataViz {...props} />} />
+            <Route exact path='/api-and-microservices' component={Microservices} />
+            <Route path='/api-and-microservices/:id' render={props => <Microservices {...props} />} />
+            <Route exact path='/information-security-and-quality-assurance' component={InfoSec} />
+            <Route path='/information-security-and-quality-assurance/:id' render={props => <InfoSec {...props} />} />
             <Route exact path='/ingredients' component={Ingredients} />
             <Route exact path="/404" component={NotFound} />
             <Redirect to="/404" />
