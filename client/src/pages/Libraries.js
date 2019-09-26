@@ -9,6 +9,7 @@ import {
 import ComingSoon from './ComingSoon'
 import Quote from '../components/libraries/Quote'
 import Markdown from '../components/libraries/Markdown'
+import Drum from '../components/libraries/Drum'
 
 function RoutesWithSubRoutes(route) {
   return (
@@ -31,7 +32,7 @@ export default class Libraries extends Component {
       },
       {
         path: '/front-end-libraries/drum-machine',
-        component: ComingSoon
+        component: Drum
       },
       {
         path: '/front-end-libraries/js-calculator',

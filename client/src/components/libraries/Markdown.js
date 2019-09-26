@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { Container } from 'semantic-ui-react'
 import Remarkable from 'remarkable'
-import RemarkableReactRenderer from 'remarkable-react'
 export default class Markdown extends Component {
   constructor(props) {
     super(props);
