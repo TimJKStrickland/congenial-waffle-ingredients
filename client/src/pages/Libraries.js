@@ -10,6 +10,7 @@ import ComingSoon from './ComingSoon'
 import Quote from '../components/libraries/Quote'
 import Markdown from '../components/libraries/Markdown'
 import Drum from '../components/libraries/Drum'
+import Calculator from '../components/libraries/Calculator'
 
 function RoutesWithSubRoutes(route) {
   return (
@@ -36,7 +37,7 @@ export default class Libraries extends Component {
       },
       {
         path: '/front-end-libraries/js-calculator',
-        component: ComingSoon
+        component: Calculator
       },
       {
         path: '/front-end-libraries/pomodoro-clock',
