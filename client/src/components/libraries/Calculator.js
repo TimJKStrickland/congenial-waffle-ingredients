@@ -5,7 +5,7 @@ export default class Calculator extends Component {
   constructor(props){
     super(props);
     this.state = {
-      formula: false,
+      formula: "",
       endValue: 0
     }
   }
@@ -16,6 +16,9 @@ export default class Calculator extends Component {
     if(numReg.test(btn)){
       if (display.innerHTML !== "0"){
         display.innerHTML += btn
+        this.setState({
+          formula: display.innerHTML
+        })
       } else {
         display.innerHTML = btn
       }
@@ -23,15 +26,40 @@ export default class Calculator extends Component {
     }
   }
 
-  add() {
+  clearClick(){
+    const display = document.getElementById('display');
+    display.innerHTML = "0";
+  }
+
+  add(btn) {
+    const display = document.getElementById('display');
+    const displayValue = Number(display.innerHTML);
+    const btnValue = btn.currentTarget.innerHTML;
+    console.log("TCL: Calculator -> add -> display", display)
+    console.log("TCL: Calculator -> add -> displayValue", displayValue)
+    display.innerHTML += btnValue
+    this.setState({
+      formula: display
+    })
+  }
+  sub(btn) {
     const display = document.getElementById('display');
     const displayValue = Number(display.innerHTML);
     console.log("TCL: Calculator -> add -> display", display)
     console.log("TCL: Calculator -> add -> displayValue", displayValue)
   }
-  sub(btn) {}
-  div(btn) {}
-  mult(btn) {}
+  div(btn) {
+    const display = document.getElementById('display');
+    const displayValue = Number(display.innerHTML);
+    console.log("TCL: Calculator -> add -> display", display)
+    console.log("TCL: Calculator -> add -> displayValue", displayValue)
+  }
+  mult(btn) {
+    const display = document.getElementById('display');
+    const displayValue = Number(display.innerHTML);
+    console.log("TCL: Calculator -> add -> display", display)
+    console.log("TCL: Calculator -> add -> displayValue", displayValue)
+  }
 
   render() {
     const { endValue, formula } = this.state;
@@ -53,7 +81,7 @@ export default class Calculator extends Component {
         <Button onClick={this.handleClick.bind(this)} id="divide">/</Button>
         <Button onClick={this.handleClick.bind(this)} id="decimal">.</Button>
         <Button onClick={this.handleClick.bind(this)} id="equals">=</Button>
-        <Button onClick={this.handleClick.bind(this)} id="clear">C</Button>
+        <Button onClick={this.clearClick.bind(this)} id="clear">C</Button>
         <div onClick={this.handleClick.bind(this)} id="display">{endValue}</div>
       </div>
     )
