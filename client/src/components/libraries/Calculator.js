@@ -92,9 +92,7 @@ export default class Calculator extends Component {
       })
     } else if(nextOperator) {
       const currentValue = firstOperand || 0;
-      console.log("TCL: Calculator -> handleOperator -> currentValue", currentValue)
       const result = operators[nextOperator](currentValue, Number(display));
-      console.log("TCL: Calculator -> handleOperator -> result", result)
       this.setState({
         display: result,
         firstOperand: result,
