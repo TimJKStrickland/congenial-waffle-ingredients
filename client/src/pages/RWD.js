@@ -47,18 +47,9 @@ export default class RWD extends Component {
     ]
     return (
       <Fragment>
-        <Header>
-          <Button as={Link} to='/rwd/tribute'>Tribute Project</Button>
-          <Button as={Link} to='/rwd/survey'>Survey Project</Button>
-          <Button as={Link} to='/rwd/product-landing-page'>Product Landing Page Project</Button>
-          <Button as={Link} to='/rwd/technical-documentation'>Technical Documentation</Button>
-          <Button as={Link} to='/rwd/portfolio'>Portfolio</Button>
-        </Header>
-        <Container>
-          {routes.map((route, i) => (
-            <RoutesWithSubRoutes key={i} {...route} />
-          ))}
-        </Container>
+        {routes.map((route, i) => (
+          <RoutesWithSubRoutes key={i} {...route} />
+        ))}
       </Fragment>
     )
   }

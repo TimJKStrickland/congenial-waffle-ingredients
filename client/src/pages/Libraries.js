@@ -46,18 +46,9 @@ export default class Libraries extends Component {
     ]
     return (
       <Fragment>
-        <Header>
-          <Button as={Link} to='/front-end-libraries/random-quote-machine'>Quote Project</Button>
-          <Button as={Link} to='/front-end-libraries/markdown-previewer'>Markdown Project</Button>
-          <Button as={Link} to='/front-end-libraries/drum-machine'>Drum Machine</Button>
-          <Button as={Link} to='/front-end-libraries/js-calculator'>JS Calculator</Button>
-          <Button as={Link} to='/front-end-libraries/pomodoro-clock'>Pomodoro Clock</Button>
-        </Header>
-        <Container>
-          {routes.map((route, i) => (
-            <RoutesWithSubRoutes key={i} {...route} />
-          ))}
-        </Container>
+        {routes.map((route, i) => (
+          <RoutesWithSubRoutes key={i} {...route} />
+        ))}
       </Fragment>
     )
   }

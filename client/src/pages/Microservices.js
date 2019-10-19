@@ -42,18 +42,9 @@ export default class Microservices extends Component {
     ]
     return (
       <Fragment>
-        <Header>
-          <Button as={Link} to='/api-and-microservices/timestamp'>Timestamp</Button>
-          <Button as={Link} to='/api-and-microservices/request-header-parser'>Request Header Parser</Button>
-          <Button as={Link} to='/api-and-microservices/url-shortener'>URL Shortener</Button>
-          <Button as={Link} to='/api-and-microservices/exercise-tracker'>Exercise Tracker</Button>
-          <Button as={Link} to='/api-and-microservices/file-metadata'>File Metadata</Button>
-        </Header>
-        <Container>
-          {routes.map((route, i) => (
-            <RoutesWithSubRoutes key={i} {...route} />
-          ))}
-        </Container>
+        {routes.map((route, i) => (
+          <RoutesWithSubRoutes key={i} {...route} />
+        ))}
       </Fragment>
     )
   }

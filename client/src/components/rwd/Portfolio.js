@@ -7,7 +7,7 @@ export default class Portfolio extends Component {
     return (
       <Fragment>
         <main id="main">
-          <navbar id="navbar" style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
+          <nav id="navbar" style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
             <ul style={{display:'flex',justifyContent:'space-around'}}>
               <li style={{listStyle:'none'}}>
                 <a href="#welcome-section">Welcome</a>
@@ -19,7 +19,7 @@ export default class Portfolio extends Component {
                 <a href="#contact">Get in Touch</a>
               </li>
             </ul>
-          </navbar>
+          </nav>
           <section id="welcome-section" style={{height: '100vh', backgroundColor:'liteblue'}}>
             <h1>Hello, world</h1>
           </section>
