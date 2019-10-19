@@ -37,7 +37,7 @@ export default class Calculator extends Component {
     const { waitingForSecondOperand, display, excludeMinus } = this.state;
     const btn = button.currentTarget.innerHTML;
     const currentValue = document.getElementById('display').innerHTML
-    if (btn == "." && currentValue.includes('.')){
+    if (btn === "." && currentValue.includes('.')){
       return
     }
     if(excludeMinus){
@@ -72,7 +72,7 @@ export default class Calculator extends Component {
     const nextOp = clickedOperator.currentTarget.id;
     const { display, firstOperand, waitingForSecondOperand, nextOperator } = this.state;
     if(nextOperator && waitingForSecondOperand) {
-      if(nextOp == "subtract"){
+      if(nextOp === "subtract"){
         this.setState((prevState) => {
           return {
             nextOperator: prevState.nextOperator,
