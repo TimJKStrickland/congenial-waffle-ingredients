@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button } from 'semantic-ui-react'
+import { Button, Grid } from 'semantic-ui-react'
 
 export default class Pomodoro extends Component {
   constructor(props){
@@ -11,33 +11,49 @@ export default class Pomodoro extends Component {
     }
   }
 
-  addTime(){
-
-  }
-
-  handleStart(){
-
-  }
+  addTime(){}
+  resetAll(){}
+  handleStart(){}
+  decreaseTime(time){}
+  increaseTime(time){}
 
 
   render() {
-    const { display, breakLength, sessionLength, timeLeft } = this.state;
+    const { breakLength, sessionLength, timeLeft } = this.state;
     return (
       <div>
-        <Button onClick={this.addTime.bind(this)} id="zero">More Time</Button>
-        <Button onClick={this.addTime.bind(this)} id="Reset">Reset</Button>
-        <Button onClick={this.handleStart.bind(this)} id="start_stop">Start</Button>
-        <Button onClick={this.handleStart.bind(this)} id="break-label">Break Length</Button>
-        <Button onClick={this.handleStart.bind(this)} id="session-label">Session Length</Button>
-        <Button onClick={this.handleStart.bind(this)} id="timer-label">Timer:</Button>
-        <Button onClick={this.handleStart.bind(this)} id="time-left">{ timeLeft }</Button>
-        <Button onClick={this.handleStart.bind(this)} id="break-decrement">- 5</Button>
-        <Button onClick={this.handleStart.bind(this)} id="break-increment">+ 5</Button>
-        <Button onClick={this.handleStart.bind(this)} id="session-decrement">- 5</Button>
-        <Button onClick={this.handleStart.bind(this)} id="session-increment">+ 5</Button>
-        <div id="break-length">{ breakLength }</div>
-        <div id="session-length">{ sessionLength }</div>
-        <audio src="" id="beep"></audio>
+        <Grid>
+          <Grid.Row centered columns='equal'>
+            <Grid.Column>
+              <h2 id="break-label">Break Length</h2>
+                  <Button onClick={this.decreaseTime('break')} id="break-decrement">-</Button>
+                  <h3 id="break-length">{ breakLength }</h3>
+                  <Button onClick={this.increaseTime('break')} id="break-increment">+</Button>
+            </Grid.Column>
+            <Grid.Column>
+              <h2 id="session-label">Session Length</h2>
+              <Button onClick={this.decreaseTime('session')} id="session-decrement">-</Button>
+              <h3 id="session-length">{sessionLength }</h3>
+              <Button onClick={this.increaseTime('session')} id="session-increment">+</Button>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <h2 id="timer-label">Timer:</h2>
+              <h3 id="time-left">{sessionLength }</h3>
+            </Grid.Column>
+            <Grid.Column>
+              <Button onClick={this.handleStart.bind(this)} id="start_stop">Start</Button>
+              <Button onClick={this.resetAll.bind(this)} id="Reset">Reset</Button>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <div id="session-length">{ sessionLength }</div>
+              <audio src="" id="beep"></audio>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </div>
     )
   }
