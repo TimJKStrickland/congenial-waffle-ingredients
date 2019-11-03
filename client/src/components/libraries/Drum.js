@@ -61,7 +61,7 @@ export default class Drum extends Component {
     } else {
       return (
         <Fragment>
-          <Container id="drum-machine">
+          <Container id="drum-machine" style={{ display: 'grid', gridRowGap: '1rem', gridTemplateColumns: '100px 100px 100px', margin: 'auto' }}>
             <Button className="drum-pad" color="green" onClick={this.handleClick.bind('Q')} id="snare">
               Q
               <audio src={snare} className="clip" id="Q"></audio>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button } from 'semantic-ui-react'
+import { Button, Container } from 'semantic-ui-react'
 
 
 const operators = {
@@ -107,26 +107,28 @@ export default class Calculator extends Component {
   render() {
     const { display } = this.state;
     return (
-      <div>
-        <Button onClick={this.handleDigit.bind(this)} id="zero">0</Button>
-        <Button onClick={this.handleDigit.bind(this)} id="one">1</Button>
-        <Button onClick={this.handleDigit.bind(this)} id="two">2</Button>
-        <Button onClick={this.handleDigit.bind(this)} id="three">3</Button>
-        <Button onClick={this.handleDigit.bind(this)} id="four">4</Button>
-        <Button onClick={this.handleDigit.bind(this)} id="five">5</Button>
-        <Button onClick={this.handleDigit.bind(this)} id="six">6</Button>
-        <Button onClick={this.handleDigit.bind(this)} id="seven">7</Button>
-        <Button onClick={this.handleDigit.bind(this)} id="eight">8</Button>
-        <Button onClick={this.handleDigit.bind(this)} id="nine">9</Button>
-        <Button onClick={this.handleOperator.bind(this)} id="add">+</Button>
-        <Button onClick={this.handleOperator.bind(this)} id="subtract">-</Button>
-        <Button onClick={this.handleOperator.bind(this)} id="multiply">&times;</Button>
-        <Button onClick={this.handleOperator.bind(this)} id="divide">&divide;</Button>
-        <Button onClick={this.handleDigit.bind(this)} id="decimal">.</Button>
-        <Button onClick={this.handleOperator.bind(this)} id="equals">=</Button>
-        <Button onClick={this.clearClick.bind(this)} id="clear">AC</Button>
-        <div id="display">{ display }</div>
-      </div>
+      <main id="main">
+        <section style={{ display: 'grid', gridTemplateColumns: '100px 100px 100px', gridGap: '20px', gridTemplateRows: '60px 60px 60px 60px 60px 60px' }}>
+          <Button onClick={this.handleDigit.bind(this)} id="zero">0</Button>
+          <Button onClick={this.handleDigit.bind(this)} id="one">1</Button>
+          <Button onClick={this.handleDigit.bind(this)} id="two">2</Button>
+          <Button onClick={this.handleDigit.bind(this)} id="three">3</Button>
+          <Button onClick={this.handleDigit.bind(this)} id="four">4</Button>
+          <Button onClick={this.handleDigit.bind(this)} id="five">5</Button>
+          <Button onClick={this.handleDigit.bind(this)} id="six">6</Button>
+          <Button onClick={this.handleDigit.bind(this)} id="seven">7</Button>
+          <Button onClick={this.handleDigit.bind(this)} id="eight">8</Button>
+          <Button onClick={this.handleDigit.bind(this)} id="nine">9</Button>
+          <Button onClick={this.handleOperator.bind(this)} id="add">+</Button>
+          <Button onClick={this.handleOperator.bind(this)} id="subtract">-</Button>
+          <Button onClick={this.handleOperator.bind(this)} id="multiply">&times;</Button>
+          <Button onClick={this.handleOperator.bind(this)} id="divide">&divide;</Button>
+          <Button onClick={this.handleDigit.bind(this)} id="decimal">.</Button>
+          <Button onClick={this.handleOperator.bind(this)} id="equals">=</Button>
+          <Button onClick={this.clearClick.bind(this)} id="clear">AC</Button>
+          <div id="display">{ display }</div>
+        </section>
+      </main>
     )
   }
 }

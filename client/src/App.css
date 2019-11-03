@@ -3,16 +3,26 @@
 }
 
 #root {
-  max-width: 65vw;
-  margin: 4rem auto 0;
+  max-width: calc(100vw - 15rem);
+  margin: 4rem 0;
 }
 
 
 #main {
+  max-width: 50vw;
+  margin: auto;
   display: grid;
   justify-self: center;
   align-self: center;
   text-align: center;
+}
+
+#header {
+  position: fixed;
+  left:0;
+  top:0;
+  width: calc(100vw - 15rem);
+  background-color:#fff;
 }
 
 img {

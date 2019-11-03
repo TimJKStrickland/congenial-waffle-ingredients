@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Menu, Dropdown, Grid } from 'semantic-ui-react'
+import { Menu, Dropdown } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 export default class Header extends Component {

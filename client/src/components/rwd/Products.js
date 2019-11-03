@@ -24,28 +24,30 @@ export default class Products extends Component {
   render() {
     return (
       <Fragment>
-        <header id="header" style={{ position:'fixed', left:0, right:0, top:0 }}>
-          <nav id="nav-bar" style={{ display: 'flex', justifyContent:'space-around', alignItems:'center'}}>
-            <a href="#top" className="nav-link">
-              <img src="https://source.unsplash.com/random" alt="Random unSplash" id="header-img" style={{ maxWidth:'50px', maxHeight:'50px' }}  />
-            </a>
-            <a href="#video" className="nav-link">Check out our video</a>
-            <a href="#form" className="nav-link">
-              Sign up!
-            </a>
-          </nav>
-        </header>
-        <section id="top"></section>
-        <section style={{
-          height: '200vh', marginTop: '8rem', display: 'flex', flexDirection:'column', justifyContent: 'center', alignContent:'center' }}>
-          <iframe title="Data and Picard - Pogo" id="video" width="560" height="315" src="https://www.youtube.com/embed/bl5TUw7sUBs" allow="encrypted-media"></iframe>
-        </section>
-        <section style={{height: '200vh', display:'flex', justifyContent:'center',alignContent:'center'}}>
-          <form action="" id="form" onSubmit={this.handleSubmit}>
-            <input type="email" name="email" id="email" placeholder="you@youremail.org" />
-            <input type="submit" value="Submit" id="submit" />
-          </form>
-        </section>
+        <main id="main">
+          <header id="header">
+            <nav id="nav-bar" style={{ display: 'flex', justifyContent:'space-around', alignItems:'center'}}>
+              <a href="#top" className="nav-link">
+                <img src="https://source.unsplash.com/random" alt="Random unSplash" id="header-img" style={{ maxWidth:'50px', maxHeight:'50px' }}  />
+              </a>
+              <a href="#video" className="nav-link">Check out our video</a>
+              <a href="#form" className="nav-link">
+                Sign up!
+              </a>
+            </nav>
+          </header>
+          <section id="top"></section>
+          <section style={{
+            height: '200vh', marginTop: '8rem', display: 'flex', flexDirection:'column', justifyContent: 'center', alignContent:'center' }}>
+            <iframe title="Data and Picard - Pogo" id="video" width="560" height="315" src="https://www.youtube.com/embed/bl5TUw7sUBs" allow="encrypted-media"></iframe>
+          </section>
+          <section style={{height: '200vh', display:'flex', justifyContent:'center',alignContent:'center'}}>
+            <form action="" id="form" onSubmit={this.handleSubmit}>
+              <input type="email" name="email" id="email" placeholder="you@youremail.org" />
+              <input type="submit" value="Submit" id="submit" />
+            </form>
+          </section>
+        </main>
       </Fragment>
     )
   }

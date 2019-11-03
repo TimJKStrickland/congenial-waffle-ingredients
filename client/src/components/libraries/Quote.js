@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Button, Container, Icon } from 'semantic-ui-react'
+import { Button, Icon } from 'semantic-ui-react'
 
 
 function getNewQuote(quotes) {
@@ -71,22 +71,24 @@ export default class Quote extends Component {
     } else {
       return (
         <Fragment>
-          <Container id="quote-box">
-            <Container>
-              <p id="text">
-                { currentQuote }
-              </p>
-              <p id="author">
-                { currentAuthor }
-              </p>
-            </Container>
-            
-          <Button id="new-quote" color="green" onClick={this.handleClick.bind(this)}>New Quote</Button>
-          <Button as="a" color="twitter" href={`https://twitter.com/intent/tweet?text=${currentQuote} - ${currentAuthor}`} target="_blank" id="tweet-quote" >
-            <Icon name='twitter'></Icon>
-            Tweet
-          </Button>
-          </Container>
+          <main id="main">
+            <div id="quote-box">
+              <div>
+                <p id="text">
+                  { currentQuote }
+                </p>
+                <p id="author">
+                  { currentAuthor }
+                </p>
+              </div>
+
+            <Button id="new-quote" color="green" onClick={this.handleClick.bind(this)}>New Quote</Button>
+            <Button as="a" color="twitter" href={`https://twitter.com/intent/tweet?text=${currentQuote} - ${currentAuthor}`} target="_blank" id="tweet-quote" >
+              <Icon name='twitter'></Icon>
+              Tweet
+            </Button>
+            </div>
+          </main>
         </Fragment>
       )
     }

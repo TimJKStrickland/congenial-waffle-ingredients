@@ -22,7 +22,6 @@ export default class App extends Component {
     return (
       <Fragment>
         <Router>
-          <Header />
           <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/rwd' component={RWD} />
@@ -40,6 +39,7 @@ export default class App extends Component {
             <Route exact path="/404" component={NotFound} />
             <Redirect to="/404" />
           </Switch>
+          <Header />
         </Router>
       </Fragment>
     )
