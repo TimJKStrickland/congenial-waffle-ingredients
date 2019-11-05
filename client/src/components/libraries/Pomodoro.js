@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import accurateInterval from '../../assets/util/accurateTimer.js'
 import { Button, Grid } from 'semantic-ui-react'
+
 
 export default class Pomodoro extends Component {
   constructor(props){
@@ -10,48 +12,19 @@ export default class Pomodoro extends Component {
       timeLeft: 1500,
       timerIsRunning: false,
       timerType: 'session',
+      interval: ''
     }
   }
 
   resetAll(){
     this.setState({
+      timeLeft: 1500,
       timerIsRunning: false,
-      breakLength: 300,
-      sessionLength: 1500
+      breakLength: 5,
+      sessionLength: 25,
+      timerType: 'session'
     })
-  }
-
-  tick(){
-    this.setState(state =>{
-      return {
-        timeLeft: state.timeLeft - 1
-      }
-    })
-  }
-
-  switchTimer(){
-    const { breakLength, timerType, timeLeft } = this.state;
-    if(timerType === 'session' && timeLeft < 0){
-      this.setState({
-        timerType: 'break',
-        timeLeft: breakLength * 60
-      })
-    }
-
-  }
-
-  runTimer(){
-    setInterval(()=>{
-      this.setState(state => {
-        return {
-          timeLeft: state.timeLeft - 1
-        }
-      })
-    }, 1000)
-  }
-
-  stopTimer(){
-    clearInterval(this.runTimer())
+    this.state.interval && this.state.interval.cancel()
   }
 
   handleStartStop(){
@@ -59,13 +32,13 @@ export default class Pomodoro extends Component {
     if(timerIsRunning){
       this.setState({
         timerIsRunning: false
-      })
-      this.stopTimer();
+      });
+      this.state.interval && this.state.interval.cancel()
     } else {
-        this.setState({
-          timerIsRunning: true
-        });
-        this.runTimer()
+      this.startClock()
+      this.setState({
+        timerIsRunning: true
+      });
     }
   }
 
@@ -91,9 +64,17 @@ export default class Pomodoro extends Component {
     }
   }
   incBreak(){
+    var breakLength = this.state.breakLength;
+    if (breakLength >= 60) {
+      return
+    }
     this.setState( prevState => { return { breakLength: prevState.breakLength + 1  } })
   }
   incSession(){
+    var sessionLength = this.state.sessionLength;
+    if(sessionLength >= 60){
+      return
+    }
     this.setState(prevState => {
       return {
         sessionLength: prevState.sessionLength + 1,
@@ -102,12 +83,54 @@ export default class Pomodoro extends Component {
     })
   }
 
-  clockIt() {
-    let minutes = Math.floor(this.state.timeLeft / 60);
-    let seconds = this.state.timeLeft - minutes * 60;
+  clockIt(timeLeft) {
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft - minutes * 60;
     seconds = seconds < 10 ? '0' + seconds : seconds;
     minutes = minutes < 10 ? '0' + minutes : minutes;
     return minutes + ':' + seconds;
+  }
+
+  startClock() {
+    this.setState({
+      interval: accurateInterval(() => {
+        this.decrementTimer();
+        this.phaseControl();
+      }, 1000)
+    })
+  }
+
+  switchTimer(timerLength, timerType){
+    this.setState({
+      timerType: timerType,
+      timeLeft: timerLength
+    })
+  }
+
+
+  phaseControl() {
+    let { timeLeft, timerType, breakLength, sessionLength, interval } = this.state;
+    // this.warning(timer);
+    // this.buzzer(timer);
+    if (timeLeft < 0) {
+      if(timerType == 'session'){
+        interval && interval.cancel();
+        this.startClock();
+        this.switchTimer(breakLength * 60, 'break');
+      } else {
+        interval && interval.cancel();
+        this.startClock();
+        this.switchTimer(sessionLength * 60, 'session')
+      }
+    }
+  }
+
+  decrementTimer(){
+    this.setState( prevState => {
+      return {
+        timeLeft: prevState.timeLeft - 1
+      }
+    })
   }
 
 
@@ -134,7 +157,7 @@ export default class Pomodoro extends Component {
           </Grid.Row>
           <Grid.Row columns={1}>
             <h2 id="timer-label">Timer:</h2>
-            <h3 id="time-left">{this.clockIt()}</h3>
+            <h3 id="time-left">{this.clockIt(timeLeft)}</h3>
           </Grid.Row>
           <Grid.Row>
             <Grid.Column>
