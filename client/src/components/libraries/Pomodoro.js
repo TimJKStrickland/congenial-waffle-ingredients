@@ -139,7 +139,7 @@ export default class Pomodoro extends Component {
           <Grid.Row>
             <Grid.Column>
               <Button onClick={this.handleStartStop.bind(this)} id="start_stop">Start</Button>
-              <Button onClick={this.resetAll.bind(this)} id="Reset">Reset</Button>
+              <Button onClick={this.resetAll.bind(this)} id="reset">Reset</Button>
               <audio src="" id="beep"></audio>
             </Grid.Column>
           </Grid.Row>
