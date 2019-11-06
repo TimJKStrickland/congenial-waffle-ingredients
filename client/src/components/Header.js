@@ -35,11 +35,11 @@ export default class Header extends Component {
             <Menu.Item>
               <Dropdown text='Data Visualization' pointing>
                 <Dropdown.Menu>
-                  <Dropdown.Item text='Timestamp' as={Link} to='/api-and-microservices/timestamp' />
-                  <Dropdown.Item text='Request Header Parser' as={Link} to='/api-and-microservices/request-header-parser' />
-                  <Dropdown.Item text='URL Shortener' as={Link} to='/api-and-microservices/url-shortener' />
-                  <Dropdown.Item text='Exercise Tracker' as={Link} to='/api-and-microservices/exercise-tracker' />
-                  <Dropdown.Item text='File Metadata' as={Link} to='/api-and-microservices/file-metadata' />
+                  <Dropdown.Item as={Link} to='/data-visualization/bar-chart' text='Bar Chart'/>
+                  <Dropdown.Item as={Link} to='/data-visualization/scatterplot-graph' text='Scatterplot Graph'/>
+                  <Dropdown.Item as={Link} to='/data-visualization/heat-map' text='Heat Map'/>
+                  <Dropdown.Item as={Link} to='/data-visualization/choropleth-map' text='Choropleth map'/>
+                  <Dropdown.Item as={Link} to='/data-visualization/treemap-diagram' text='Treemap Diagram'/>
                 </Dropdown.Menu>
               </Dropdown>
             </Menu.Item>
