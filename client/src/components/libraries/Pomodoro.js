@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import accurateInterval from '../../assets/util/accurateTimer.js'
+import boop from '../../assets/clock/bing.mp3'
 import { Button, Grid } from 'semantic-ui-react'
 
 
@@ -11,7 +12,7 @@ export default class Pomodoro extends Component {
       sessionLength: 25,
       timeLeft: 1500,
       timerIsRunning: false,
-      timerType: 'session',
+      timerType: 'Session',
       interval: ''
     }
   }
@@ -22,9 +23,12 @@ export default class Pomodoro extends Component {
       timerIsRunning: false,
       breakLength: 5,
       sessionLength: 25,
-      timerType: 'session'
+      timerType: 'Session'
     })
     this.state.interval && this.state.interval.cancel()
+    let beep = document.getElementById('beep');
+    beep.pause();
+    beep.currentTime = 0;
   }
 
   handleStartStop(){
@@ -83,6 +87,14 @@ export default class Pomodoro extends Component {
     })
   }
 
+  soundOff(){
+    let { timeLeft } = this.state;
+    let beep = document.getElementById('beep');
+    if(timeLeft === 0){
+      beep.play();
+    }
+  }
+
   clockIt(timeLeft) {
     let minutes = Math.floor(timeLeft / 60);
     let seconds = timeLeft - minutes * 60;
@@ -110,17 +122,16 @@ export default class Pomodoro extends Component {
 
   phaseControl() {
     let { timeLeft, timerType, breakLength, sessionLength, interval } = this.state;
-    // this.warning(timer);
-    // this.buzzer(timer);
+    this.soundOff();
     if (timeLeft < 0) {
-      if(timerType == 'session'){
+      if(timerType == 'Session'){
         interval && interval.cancel();
         this.startClock();
-        this.switchTimer(breakLength * 60, 'break');
+        this.switchTimer(breakLength * 60, 'Break');
       } else {
         interval && interval.cancel();
         this.startClock();
-        this.switchTimer(sessionLength * 60, 'session')
+        this.switchTimer(sessionLength * 60, 'Session')
       }
     }
   }
@@ -135,7 +146,7 @@ export default class Pomodoro extends Component {
 
 
   render() {
-    const { breakLength, sessionLength, timeLeft } = this.state;
+    const { breakLength, sessionLength, timeLeft, timerType } = this.state;
     return (
       <div>
         <Grid centered divided>
@@ -156,14 +167,14 @@ export default class Pomodoro extends Component {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row columns={1}>
-            <h2 id="timer-label">Timer:</h2>
+            <h2 id="timer-label">Timer: { timerType }</h2>
             <h3 id="time-left">{this.clockIt(timeLeft)}</h3>
           </Grid.Row>
           <Grid.Row>
             <Grid.Column>
               <Button onClick={this.handleStartStop.bind(this)} id="start_stop">Start</Button>
               <Button onClick={this.resetAll.bind(this)} id="reset">Reset</Button>
-              <audio src="" id="beep"></audio>
+              <audio src={ boop } id="beep" preload="auto"></audio>
             </Grid.Column>
           </Grid.Row>
         </Grid>
