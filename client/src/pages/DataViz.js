@@ -7,6 +7,7 @@ import {
 } from 'semantic-ui-react'
 
 import ComingSoon from './ComingSoon'
+import BarChart from '../components/data-viz/BarChart'
 
 function RoutesWithSubRoutes(route) {
   return (
@@ -21,7 +22,7 @@ export default class DataViz extends Component {
     const routes = [
       {
         path: '/data-visualization/bar-chart',
-        component: ComingSoon
+        component: BarChart
       },
       {
         path: '/data-visualization/scatterplot-graph',
@@ -42,13 +43,6 @@ export default class DataViz extends Component {
     ]
     return (
       <Fragment>
-        <Header>
-          <Button as={Link} to='/data-visualization/bar-chart'>Bar Chart</Button>
-          <Button as={Link} to='/data-visualization/scatterplot-graph'>Scatterplot Graph</Button>
-          <Button as={Link} to='/data-visualization/heat-map'>Heat Map</Button>
-          <Button as={Link} to='/data-visualization/choropleth-map'>Choropleth map</Button>
-          <Button as={Link} to='/data-visualization/treemap-diagram'>Treemap Diagram</Button>
-        </Header>
         <Container>
           {routes.map((route, i) => (
             <RoutesWithSubRoutes key={i} {...route} />
