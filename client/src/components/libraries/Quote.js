@@ -36,11 +36,6 @@ export default class Quote extends Component {
     .then(resp => resp.json())
     .then(result => {
       const quotes = JSON.parse(result.files.quotes.content).quotes
-      try {
-        console.log("TCL: Quote -> componentDidMount -> JSON.parse(quotes)", JSON.parse(quotes).quotes)
-      } catch(ex) {
-        console.log("TCL: Quote -> componentDidMount -> ex", ex)
-      }
       const currentQuoteIndex = getNewQuote(quotes.length)
       const renderQuote = quotes[currentQuoteIndex].quote;
       const renderAuthor = quotes[currentQuoteIndex].author;
@@ -62,12 +57,16 @@ export default class Quote extends Component {
     const { error, isLoaded, currentQuote, currentAuthor } = this.state;
     if(error){
       return (
-        <div>
+        <Fragment>
+          <main id="main">
           { error }
-        </div>
+          </main>
+        </Fragment>
       )
     } else if (!isLoaded) {
-      return <div>Loading...</div>
+      return <Fragment>
+        <main id="main">Loading...</main>
+      </Fragment>
     } else {
       return (
         <Fragment>
