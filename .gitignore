@@ -31,3 +31,4 @@
 # Place files for /public in /client/public
 /public
 .DS_Store
+.vscode/
