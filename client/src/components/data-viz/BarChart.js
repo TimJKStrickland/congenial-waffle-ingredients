@@ -7,82 +7,116 @@ export default class BarChart extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      dates: [
-        { 'date': '2013-01', value: 53 },
-        { 'date': '2013-02', value: 165 },
-        { 'date': '2013-03', value: 269 },
-        { 'date': '2013-04', value: 344 },
-        { 'date': '2013-05', value: 376 },
-        { 'date': '2013-06', value: 410 },
-        { 'date': '2013-07', value: 421 },
-        { 'date': '2013-08', value: 405 },
-        { 'date': '2013-09', value: 376 },
-        { 'date': '2013-10', value: 359 },
-        { 'date': '2013-11', value: 392 },
-        { 'date': '2013-12', value: 433 },
-        { 'date': '2014-01', value: 455 },
-        { 'date': '2014-02', value: 478 },
-      ],
-      data: [53,
-             165,
-             269,
-             344,
-             376,
-             410]
+      data: [],
+      gdp: []
     }
   }
   componentDidMount(){
-    const data = this.state.data;
-    this.drawBarChart(data);
+    fetch(`https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json`)
+    .then(res=>res.json())
+    .then(result=>{
+      this.setState({
+        isLoaded: true,
+        data: result.data
+      })
+      const data = this.state.data;
+      this.drawBarChart(data);
+    },
+    error => {
+      this.setState({
+        isLoaded: true,
+        error
+      })
+    }
+    );
+
   }
   drawBarChart(data) {
-    const canvasHeight = 300;
-    const canvasWidth = 300;
+    const canvasHeight = 650;
+    const canvasWidth = 650;
     const canvasContainer = d3.select('#main');
-    const margin = { top: 0, bottom: 20, left: 30, right: 20 };
-    const x = d3.scalePoint()
-    .domain([...data])
-    .range([15, 45 * data.length]);
-    
+    const margin = { top: 10, bottom:30, left: 50, right: 50 };
+
+    // const values = data.map(datum => datum[1]);
+    const formatDates = d3.timeParse("%Y-%m-%d");
+    const dates = data.map(datum => formatDates(datum[0]));
+    const x = d3.scaleTime()
+    .domain(d3.extent(dates))
+    .range([0, (canvasWidth - margin.left - margin.right)]);
+
     const y = d3.scaleLinear()
-    .domain([0, Math.max(...data)])
-    .range([0, 300]);
-    
+    .domain([0, d3.max(data, (d) => d[1])])
+    .range([(canvasHeight - margin.bottom - margin.top), margin.bottom]);
+
     canvasContainer.append('h1')
     .html('Bar Chart of glory')
     .attr('id', 'title');
-    
+
     canvasContainer.append('svg')
     .attr('width', canvasWidth)
     .attr('height', canvasHeight)
     .attr("viewBox", `0 0 ${canvasWidth} ${canvasHeight}`)
     .attr('id', 'canvas')
-    .style('border', '1px solid black');
-    
+    .style('border', '1px solid black')
+    .style('margin', '0 auto');
+
     const svgCanvas = d3.select('#canvas');
-    const chart = svgCanvas.append("g").attr("transform", `translate(${margin.left},0)`);
+    const chart = svgCanvas.append("g")
+    .attr("transform", `translate(${margin.left}, 0)`)
+    .attr('id', 'chart');
 
     svgCanvas.append('g')
+      .call(d3.axisBottom(x))
       .attr('id', 'x-axis')
-      .attr('transform', 'translate(0, 10)')
-      .call(d3.axisBottom(x));
-      
-      svgCanvas.append('g')
-      .attr('transform', 'translate(10, 0)')
-      .attr('id', 'y-axis')
-      .call(d3.axisLeft(y))
+      .attr('transform', `translate(${margin.left}, ${canvasHeight - margin.top - margin.bottom})`)
 
-    chart.selectAll('rect')
+      svgCanvas.append('g')
+      .call(d3.axisLeft().scale(y))
+      .attr('transform', `translate(${margin.left}, 0)`)
+      .attr('id', 'y-axis');
+
+    chart
+      .selectAll("rect")
       .data(data)
       .enter()
-      .append('rect')
-      .attr('height', datapoint => (datapoint / Math.max(...data)) * 100)
-      .attr('width', 10)
-      .attr('class', 'bar')
-      .attr('fill', 'orange')
-      .attr('x', (datapoint, iteration) => iteration / data.length * (canvasWidth - 50))
-      .attr('y', datapoint => (canvasHeight - (datapoint / Math.max(...data)) * 100));
+      .append("rect")
+      .attr(
+        "height",
+        (datapoint) =>
+          canvasHeight - y(datapoint[1]) - margin.top - margin.bottom
+      )
+      .attr("width", 2)
+      .attr("data-gdp", (dp) => dp[1])
+      .attr("data-date", (dp) => dp[0])
+      .attr("class", "bar")
+      .attr("fill", "orange")
+      .attr("x", (datapoint) => x(formatDates(datapoint[0])))
+      .attr("y", (datapoint) => y(datapoint[1]))
+      .text(function (d) {
+        return d;
+      })
+      .on("mouseover", function (d) {
+        tooltip.html(`${d[0]}, ${d[1]}`);
+        tooltip.attr('data-date', d[0])
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function (d) {
+        return tooltip.attr(
+          "transform",
+          `translate(${x(formatDates(d[0]))},${y(d[1])})`
+        );
+      })
+      .on("mouseout", function () {
+        return tooltip.style("visibility", "hidden");
+      });
 
+      var tooltip = d3
+        .select("#canvas")
+        .append("text")
+        .attr("id", "tooltip")
+        .style("position", "absolute")
+        .style("z-index", "10")
+        .style("visibility", "hidden")
   }
 
   render() {
