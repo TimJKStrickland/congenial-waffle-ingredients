@@ -8,6 +8,7 @@ import {
 
 import ComingSoon from './ComingSoon'
 import BarChart from '../components/data-viz/BarChart'
+import ScatterplotChart from "../components/data-viz/ScatterplotChart";
 
 function RoutesWithSubRoutes(route) {
   return (
@@ -26,7 +27,7 @@ export default class DataViz extends Component {
       },
       {
         path: '/data-visualization/scatterplot-graph',
-        component: ComingSoon
+        component: ScatterplotChart
       },
       {
         path: '/data-visualization/heat-map',
