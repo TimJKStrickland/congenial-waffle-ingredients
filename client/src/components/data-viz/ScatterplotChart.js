@@ -12,23 +12,26 @@ export default class ScatterPlot extends Component {
     }
   }
   componentDidMount(){
-    fetch(`https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json`)
-    .then(res=>res.json())
-    .then(result=>{
-      this.setState({
-        isLoaded: true,
-        data: result.data
-      })
-      const data = this.state.data;
-      this.drawScatterPlot(data);
-    },
-    error => {
-      this.setState({
-        isLoaded: true,
-        error
-      })
-    }
-    );
+    fetch(
+      `https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json`
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            data: result,
+          });
+          const data = this.state.data;
+          this.drawScatterPlot(data);
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
 
   }
   drawScatterPlot(data) {
@@ -37,19 +40,20 @@ export default class ScatterPlot extends Component {
     const canvasContainer = d3.select('#main');
     const margin = { top: 10, bottom:30, left: 50, right: 50 };
 
-    // const values = data.map(datum => datum[1]);
-    const formatDates = d3.timeParse("%Y-%m-%d");
-    const dates = data.map(datum => formatDates(datum[0]));
+    const parseYears = d3.timeParse("%Y");
+    const parseMinutes = d3.timeParse("%M:%S");
+    const minutes = data.map(datum => parseMinutes(datum['Time']));
+    const years = data.map(datum => parseYears(datum['Year']));
     const x = d3.scaleTime()
-    .domain(d3.extent(dates))
+    .domain(d3.extent(years))
     .range([0, (canvasWidth - margin.left - margin.right)]);
 
-    const y = d3.scaleLinear()
-    .domain([0, d3.max(data, (d) => d[1])])
+    const y = d3.scaleTime()
+    .domain(d3.extent(minutes))
     .range([(canvasHeight - margin.bottom - margin.top), margin.bottom]);
 
     canvasContainer.append('h1')
-    .html('Bar Chart of glory')
+    .html('Scatterplot Chart of glory')
     .attr('id', 'title');
 
     canvasContainer.append('svg')
@@ -71,43 +75,38 @@ export default class ScatterPlot extends Component {
       .attr('transform', `translate(${margin.left}, ${canvasHeight - margin.top - margin.bottom})`)
 
       svgCanvas.append('g')
-      .call(d3.axisLeft().scale(y))
+      .call(d3.axisLeft(y))
       .attr('transform', `translate(${margin.left}, 0)`)
       .attr('id', 'y-axis');
 
     chart
-      .selectAll("rect")
+      .selectAll("circle")
       .data(data)
       .enter()
-      .append("rect")
-      .attr(
-        "height",
-        (datapoint) =>
-          canvasHeight - y(datapoint[1]) - margin.top - margin.bottom
-      )
-      .attr("width", 2)
-      .attr("data-gdp", (dp) => dp[1])
-      .attr("data-date", (dp) => dp[0])
-      .attr("class", "bar")
+      .append("circle")
+      .attr("r", 5)
+      .attr("cx", (datapoint) => x(parseYears(datapoint['Year'])))
+      .attr("cy", (datapoint) => canvasHeight - y(parseMinutes(datapoint['Time'])))
+      .attr("data-xvalue", (dp) => dp['Year'])
+      .attr("data-yvalue", (dp) => dp['Time'])
+      .attr("class", "dot")
       .attr("fill", "orange")
-      .attr("x", (datapoint) => x(formatDates(datapoint[0])))
-      .attr("y", (datapoint) => y(datapoint[1]))
       .text(function (d) {
-        return d;
+        // return d;
       })
       .on("mouseover", function (d) {
-        tooltip.html(`${d[0]}, ${d[1]}`);
-        tooltip.attr('data-date', d[0])
-        return tooltip.style("visibility", "visible");
+        // tooltip.html(`${d['Year']}, ${d['Time']}`);
+        // tooltip.attr('data-date', d['Year'])
+        // return tooltip.style("visibility", "visible");
       })
       .on("mousemove", function (d) {
-        return tooltip.attr(
-          "transform",
-          `translate(${x(formatDates(d[0]))},${y(d[1])})`
-        );
+        // return tooltip.attr(
+          // "transform",
+          // `translate(${x(d['Year'])},${y(d['Time'])})`
+        // );
       })
       .on("mouseout", function () {
-        return tooltip.style("visibility", "hidden");
+        // return tooltip.style("visibility", "hidden");
       });
 
       var tooltip = d3
