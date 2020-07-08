@@ -9,6 +9,7 @@ import {
 import ComingSoon from './ComingSoon'
 import BarChart from '../components/data-viz/BarChart'
 import ScatterplotChart from "../components/data-viz/ScatterplotChart";
+import HeatMap from "../components/data-viz/HeatMap";
 
 function RoutesWithSubRoutes(route) {
   return (
@@ -31,7 +32,7 @@ export default class DataViz extends Component {
       },
       {
         path: '/data-visualization/heat-map',
-        component: ComingSoon
+        component: HeatMap
       },
       {
         path: '/data-visualization/choropleth-map',
