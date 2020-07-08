@@ -40,17 +40,30 @@ export default class ScatterPlot extends Component {
     const canvasContainer = d3.select('#main');
     const margin = { top: 10, bottom:30, left: 50, right: 50 };
 
-    const parseYears = d3.timeParse("%Y");
-    const parseMinutes = d3.timeParse("%M:%S");
-    const minutes = data.map(datum => parseMinutes(datum['Time']));
-    const years = data.map(datum => parseYears(datum['Year']));
+    const getDateY = (datum) => new Date(datum["Year"], 0, 0, 0, 0, 0, 0);
+    const getDateMS = (datum) => {
+      let [mm, ss] = datum['Time'].split(':').map(x=>Number(x));
+      let date = new Date();
+      date.setMinutes(mm)
+      date.setSeconds(ss)
+      return date;
+    };
+    const minX = d3.min(data, d=> getDateY(d));
+    const maxX = d3.max(data, d=> getDateY(d));
+    const maxY = d3.max(data, d=> getDateMS(d));
+    const minY = d3.min(data, d=> getDateMS(d));
+    minX.setFullYear(minX.getFullYear());
+    maxX.setFullYear(maxX.getFullYear());
+    maxY.setSeconds(maxY.getSeconds());
+    minY.setSeconds(minY.getSeconds());
+
     const x = d3.scaleTime()
-    .domain(d3.extent(years))
+    .domain([minX, maxX])
     .range([0, (canvasWidth - margin.left - margin.right)]);
 
     const y = d3.scaleTime()
-    .domain(d3.extent(minutes))
-    .range([(canvasHeight - margin.bottom - margin.top), margin.bottom]);
+    .domain([minY, maxY])
+    .range([canvasHeight - margin.bottom - margin.top, margin.bottom]);
 
     canvasContainer.append('h1')
     .html('Scatterplot Chart of glory')
@@ -70,12 +83,14 @@ export default class ScatterPlot extends Component {
     .attr('id', 'chart');
 
     svgCanvas.append('g')
-      .call(d3.axisBottom(x))
+      .call(d3.axisBottom(x)
+      .tickFormat(d3.scaleTime().tickFormat(10, "%Y")))
       .attr('id', 'x-axis')
       .attr('transform', `translate(${margin.left}, ${canvasHeight - margin.top - margin.bottom})`)
 
       svgCanvas.append('g')
-      .call(d3.axisLeft(y))
+      .call(d3.axisLeft(y)
+      .tickFormat(d3.scaleTime().tickFormat(10, "%M:%S")))
       .attr('transform', `translate(${margin.left}, 0)`)
       .attr('id', 'y-axis');
 
@@ -84,32 +99,42 @@ export default class ScatterPlot extends Component {
       .data(data)
       .enter()
       .append("circle")
-      .attr("r", 5)
-      .attr("cx", (datapoint) => x(parseYears(datapoint['Year'])))
-      .attr("cy", (datapoint) => canvasHeight - y(parseMinutes(datapoint['Time'])))
+      .attr("r", 10)
+      .attr("cx", (datapoint) => x(getDateY(datapoint)))
+      .attr("cy", (datapoint) => y(getDateMS(datapoint)))
       .attr("data-xvalue", (dp) => dp['Year'])
-      .attr("data-yvalue", (dp) => dp['Time'])
+      .attr("data-yvalue", (dp) => getDateMS(dp))
       .attr("class", "dot")
       .attr("fill", "orange")
       .text(function (d) {
-        // return d;
+        return d['Year'];
       })
       .on("mouseover", function (d) {
-        // tooltip.html(`${d['Year']}, ${d['Time']}`);
-        // tooltip.attr('data-date', d['Year'])
-        // return tooltip.style("visibility", "visible");
+        tooltip.text(`${d["Time"]},${d["Year"]}`);
+        tooltip.attr('data-year', d['Year'])
+        return tooltip.style("visibility", "visible");
       })
-      .on("mousemove", function (d) {
-        // return tooltip.attr(
-          // "transform",
-          // `translate(${x(d['Year'])},${y(d['Time'])})`
-        // );
+      .on("mouseenter", function (d) {
+        let year = getDateY(d);
+        let time = getDateMS(d);
+        return tooltip.attr(
+          "transform",
+          `translate(${x(year)},${y(time)})`
+        );
       })
       .on("mouseout", function () {
-        // return tooltip.style("visibility", "hidden");
+        return tooltip.style("visibility", "hidden");
       });
 
-      var tooltip = d3
+      const legend = d3
+        .select("#canvas")
+        .append("text")
+        .attr("id", "legend")
+        .style("position", "absolute")
+        .style("z-index", "10")
+        .style("visibility", "visible");
+
+      const tooltip = d3
         .select("#canvas")
         .append("text")
         .attr("id", "tooltip")
